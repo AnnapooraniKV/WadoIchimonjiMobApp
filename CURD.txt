@@ -1,0 +1,135 @@
+﻿package com.example.curd;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+public class MainActivity extends AppCompatActivity {
+SQLiteDatabase db;
+Button btnsave, btnupdate, btndelete, btnread;
+EditText edttxtname, edttxtage;
+@SuppressLint("MissingInflatedId")
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState);
+setContentView(R.layout.activity_main);
+btnsave = findViewById(R.id.btnsave);
+btnupdate = findViewById(R.id.btnupdate);
+btndelete = findViewById(R.id.btndelete);
+btnread = findViewById(R.id.btnread);
+edttxtname = findViewById(R.id.edttxtname);
+edttxtage = findViewById(R.id.edttxtage);
+db = openOrCreateDatabase("StudentDB", Context.MODE_PRIVATE, null);
+db.execSQL("CREATE TABLE IF NOT EXISTS Student1(Name VARCHAR,Age VARCHAR);");
+btnsave.setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(View view) {
+insertRecord();
+}
+});
+btnupdate.setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(View view) {
+updateRecord();
+}
+});
+btndelete.setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(View view) {
+deleteRecord();
+}
+});
+btnread.setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(View view) {
+readRecords();
+}
+});
+}
+private void insertRecord() {
+db.execSQL("INSERT INTO Student1 VALUES('"+edttxtname.getText()+"','"+ edttxtage.getText()+"');");
+Toast.makeText(getApplicationContext(),"Record Inserted",Toast.LENGTH_LONG).show();
+}
+private void updateRecord() {
+db.execSQL("UPDATE Student1 SET Age='"+edttxtage.getText()+"' WHERE
+Name='"+edttxtname.getText()+"';");
+Toast.makeText(getApplicationContext(),"Record Updated",Toast.LENGTH_LONG).show();
+}
+private void deleteRecord() {
+db.execSQL("DELETE FROM Student1 WHERE Name='"+edttxtname.getText()+"';");
+Toast.makeText(getApplicationContext(),"Record Deleted",Toast.LENGTH_LONG).show();
+}
+private void readRecords() {
+Cursor cursor = db.rawQuery("SELECT * FROM Student1", null);
+StringBuilder stringBuilder = new StringBuilder();
+if (cursor.moveToFirst()) {
+do {
+String name = cursor.getString(0);
+String age = cursor.getString(1);
+stringBuilder.append("Name: ").append(name).append(", Age: ").append(age).append("\n");
+} while (cursor.moveToNext());
+}
+cursor.close();
+Toast.makeText(getApplicationContext(), stringBuilder.toString(), Toast.LENGTH_LONG).show();
+}
+}
+
+
+
+
+XML
+activity_main.xml:
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:padding="16dp"
+tools:context=".MainActivity">
+<EditText
+android:id="@+id/edttxtname"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:hint="Name"
+android:layout_marginBottom="16dp"/>
+<EditText
+android:id="@+id/edttxtage"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:hint="Age"
+android:layout_below="@id/edttxtname"
+android:layout_marginBottom="16dp"/>
+<Button
+android:id="@+id/btnsave"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:text="Save"
+android:layout_below="@id/edttxtage"
+android:layout_marginBottom="16dp"/>
+<Button
+android:id="@+id/btnupdate"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:text="Update"
+android:layout_below="@id/btnsave"
+android:layout_marginBottom="16dp"/>
+<Button
+android:id="@+id/btndelete"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:text="Delete"
+android:layout_below="@id/btnupdate"
+android:layout_marginBottom="16dp"/>
+<Button
+android:id="@+id/btnread"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:text="Read"
+android:layout_below="@id/btndelete"
+android:layout_marginBottom="16dp"/>
+</RelativeLayout>
