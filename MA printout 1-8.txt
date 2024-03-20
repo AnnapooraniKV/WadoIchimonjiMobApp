@@ -1,0 +1,2295 @@
+﻿6.Imageview and TextView
+
+
+Imageview and TextView MainActivity.java:
+
+
+package com.example.imageviewandtextview;
+
+
+import androidx.appcompat.app.AppCompatActivity;
+
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+
+public class MainActivity extends AppCompatActivity {
+
+
+   @Override
+   protected void onCreate(Bundle savedInstanceState) {
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.activity_main);
+       Button b1;
+       ImageView iv;
+       ImageView iv2;
+       boolean flag;
+       int images[]={R.drawable.img1,R.drawable.img2,R.drawable.img3};
+       final int[] i = {0};
+
+
+           iv=(ImageView) findViewById(R.id.imageView1);
+           iv2=(ImageView)  findViewById(R.id.imageView2);
+           b1=(Button) findViewById(R.id.button);
+           flag=true;
+           b1.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   Toast.makeText(getApplicationContext(), "Value of i" + i[0], Toast.LENGTH_SHORT).show();
+                   if(i[0] ==2) {
+                       i[0] =0;}
+                   else {
+                       iv.setImageResource(images[i[0]]);
+                       iv2.setImageResource(images[i[0] + 1]);
+                       i[0]++;
+                   }
+               }
+           });
+       }
+   }
+
+
+
+
+XML code:
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
+   xmlns:tools="http://schemas.android.com/tools"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   tools:context=".MainActivity">
+
+
+   <ImageView
+       android:id="@+id/imageView1"
+       android:layout_width="203dp"
+       android:layout_height="230dp"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintVertical_bias="0.055"
+       app:srcCompat="@drawable/img1"
+       android:contentDescription="TODO"
+       tools:ignore="HardcodedText" />
+
+
+   <Button
+       android:id="@+id/button"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_gravity="center"
+       android:text="click_me"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.498"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintVertical_bias="0.754" />
+
+
+   <ImageView
+       android:id="@+id/imageView2"
+       android:layout_width="200dp"
+       android:layout_height="200dp"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="@+id/imageView1"
+       app:layout_constraintVertical_bias="0.517"
+       app:srcCompat="@drawable/img2"
+       android:contentDescription="@string/todo" />
+
+
+
+
+   <TextView
+       android:id="@+id/textView"
+       android:layout_width="155dp"
+       android:layout_height="45dp"
+       android:text="click_on_the_image"
+       android:textAppearance="?android:attr/textAppearanceMedium"
+       android:textColor="#F392B3"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintVertical_bias="0.849"
+       tools:ignore="TextSizeCheck" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Input Screen
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+Output screens:
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+Calculator
+Input screen:
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Output screen:
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+Java Code:
+package com.example.calculator;
+
+
+import androidx.appcompat.app.AppCompatActivity;
+
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+
+import org.xml.sax.InputSource;
+
+
+import java.text.DecimalFormat;
+
+
+import javax.xml.namespace.QName;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
+
+
+public class MainActivity extends AppCompatActivity {
+   // Declare variables to hold references to UI elements
+   private EditText num1EditText, num2EditText;
+   private TextView resultTextView;
+       @Override
+       protected void onCreate(Bundle savedInstanceState) {
+           super.onCreate(savedInstanceState);
+           setContentView(R.layout.activity_main);
+           // Initialize UI elements from the layout
+           num1EditText = findViewById(R.id.num1EditText);
+           num2EditText = findViewById(R.id.num2EditText);
+           resultTextView = findViewById(R.id.resultTextView);
+
+
+           // Set click listeners for arithmetic operation buttons
+
+
+           Button addButton = findViewById(R.id.addButton);
+           addButton.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   performCalculation('+');
+               }
+           });
+
+
+           Button subtractButton = findViewById(R.id.subtractButton);
+           subtractButton.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   performCalculation('-');
+               }
+           });
+
+
+           Button multiplyButton = findViewById(R.id.multiplyButton);
+           multiplyButton.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   performCalculation('*');
+               }
+           });
+
+
+           Button divideButton = findViewById(R.id.divideButton);
+           divideButton.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   performCalculation('/');
+               }
+           });
+
+
+           Button sqrtButton = findViewById(R.id.sqrtButton);
+           sqrtButton.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   calculateSquareRoot();
+               }
+           });
+       }
+
+
+   private void performCalculation(char operator) {
+       // Get the values entered in the input fields
+       String num1Str = num1EditText.getText().toString();
+       String num2Str = num2EditText.getText().toString();
+
+
+       // Check if either input field is empty
+       if (num1Str.isEmpty() || num2Str.isEmpty()) {
+           Toast.makeText(this, "Please enter both numbers", Toast.LENGTH_SHORT).show();
+           return; // Exit the method to prevent calculations with empty inputs
+       }
+
+
+       // Convert the input values to numeric format
+       double num1 = Double.parseDouble(num1Str);
+       double num2 = Double.parseDouble(num2Str);
+       double result = 0;
+
+
+       // Perform the selected calculation based on the operator
+       switch (operator) {
+           case '+':
+               result = num1 + num2;
+               break;
+           case '-':
+               result = num1 - num2;
+               break;
+           case '*':
+               result = num1 * num2;
+               break;
+           case '/':
+               if (num2 != 0) {
+                   result = num1 / num2;
+               } else {
+                   Toast.makeText(this, "Cannot divide by zero", Toast.LENGTH_SHORT).show();
+                   return; // Exit the method if division by zero is attempted
+               }
+               break;
+       }
+
+
+       // Format and display the calculation result
+       DecimalFormat df = new DecimalFormat("#.##");
+       resultTextView.setText("Result: " + df.format(result));
+   }
+
+
+   private void calculateSquareRoot() {
+       String num1Str = num1EditText.getText().toString();
+       // Check if the input field is empty
+       if (num1Str.isEmpty()) {
+           Toast.makeText(this, "Please enter a number", Toast.LENGTH_SHORT).show();
+           return; // Exit the method to prevent calculations with empty inputs
+       }
+
+
+       double num = Double.parseDouble(num1Str);
+       double sqrtResult = Math.sqrt(num);
+       DecimalFormat df = new DecimalFormat("#.##");
+       resultTextView.setText("Square Root: " + df.format(sqrtResult));
+   }
+}
+
+
+XML code:
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
+   xmlns:tools="http://schemas.android.com/tools"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   android:padding="16dp"
+   tools:context=".MainActivity">
+
+
+   <EditText
+       android:id="@+id/num1EditText"
+       android:layout_width="0dp"
+       android:layout_height="48dp"
+       android:layout_marginTop="44dp"
+       android:hint="Enter number 1"
+       android:inputType="numberDecimal"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent" />
+
+
+   <EditText
+       android:id="@+id/num2EditText"
+       android:layout_width="0dp"
+       android:layout_height="48dp"
+       android:layout_marginTop="12dp"
+       android:hint="Enter number 2"
+       android:inputType="numberDecimal"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.47"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/num1EditText" />
+
+
+   <Button
+       android:id="@+id/addButton"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="20dp"
+       android:text="+"
+       android:textSize="16sp"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/num2EditText" />
+
+
+   <Button
+       android:id="@+id/subtractButton"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="20dp"
+       android:text="-"
+       android:textSize="16sp"
+       app:layout_constraintEnd_toStartOf="@+id/multiplyButton"
+       app:layout_constraintStart_toEndOf="@+id/addButton"
+       app:layout_constraintTop_toBottomOf="@+id/num2EditText" />
+
+
+   <Button
+       android:id="@+id/multiplyButton"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="20dp"
+       android:text="x"
+       android:textSize="16sp"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/num2EditText" />
+
+
+   <Button
+       android:id="@+id/divideButton"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="20dp"
+       android:text="/"
+       android:textSize="16sp"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/addButton" />
+
+
+   <Button
+       android:id="@+id/sqrtButton"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="20dp"
+       android:layout_marginEnd="140dp"
+       android:text="Sqrt"
+       android:textSize="16sp"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/subtractButton" />
+
+
+   <TextView
+       android:id="@+id/resultTextView"
+       android:layout_width="84dp"
+       android:layout_height="41dp"
+       android:layout_marginStart="4dp"
+       android:layout_marginTop="40dp"
+       android:text="Result: "
+       android:textSize="18sp"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/divideButton" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5. Radiobutton,checkbox,Switch buttons
+
+
+Output screens:
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+Input screens:
+
+
+  
+
+
+
+Java code:
+package com.example.myapplication;
+
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
+
+
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
+
+
+public class multi_ui_events extends AppCompatActivity {
+   String TAG =multi_ui_events.class.getName();
+
+
+   private SwitchCompat swOnOff;
+
+
+   private CheckBox chMobileApp,chWebApp,chAI ;
+
+
+   private RadioGroup rgGender;
+
+
+
+
+   @Override
+   protected void onCreate(Bundle savedInstanceState) {
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.activity_main);
+       swOnOff= findViewById(R.id.swOnOff);
+       chMobileApp=findViewById(R.id.chMobileApp);
+       chWebApp=findViewById(R.id.chWebApp);
+       chAI=findViewById(R.id.chAI);
+       rgGender=findViewById(R.id.rgGender);
+
+
+       rgGender.setOnCheckedChangeListener((new RadioGroup.OnCheckedChangeListener() {
+           @Override
+           public void onCheckedChanged(RadioGroup radioGroup, int i) {
+               RadioButton radioButton=rgGender.findViewById(i);
+               String selectedString=radioButton.getText().toString();
+               Toast.makeText(multi_ui_events.this,"Your selection is:"+selectedString,Toast.LENGTH_SHORT).show();
+           }
+
+
+       }));
+
+
+       swOnOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+           @Override
+           public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+               Log.d(TAG, "b"+b);
+           }
+       });
+       chMobileApp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+           @Override
+           public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+               Log.d(TAG, chMobileApp.getText().toString() + "status" + b);
+               Toast.makeText(getApplicationContext(), chMobileApp.getText().toString() + " " + b, Toast.LENGTH_LONG).show();
+
+
+
+
+           }
+       });
+       chWebApp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+           @Override
+           public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+               Log.d(TAG,chWebApp.getText().toString()+"status"+b);
+               Toast.makeText(getApplicationContext(), chWebApp.getText().toString() + " " + b, Toast.LENGTH_LONG).show();
+
+
+           }
+       });
+       chAI.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+           @Override
+           public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+               Log.d(TAG, chAI.getText().toString()+"status"+b);
+               Toast.makeText(getApplicationContext(), chAI.getText().toString() + " " + b, Toast.LENGTH_LONG).show();
+           }
+       });
+   }
+}
+
+
+
+
+XML code:
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:tools="http://schemas.android.com/tools"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   android:layout_margin="8dp"
+   android:orientation="vertical"
+   android:background="#D3F1ED">
+   <androidx.appcompat.widget.SwitchCompat
+       android:id="@+id/swOnOff"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:padding="16dp"
+       android:text="Switch button testing ON"
+       android:textSize="25dp"
+       tools:ignore="VisualLintButtonSize" />
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:padding="8dp"
+       android:orientation="vertical"/>
+
+
+
+
+   <TextView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="Choose your subject"
+       android:textColor="@color/black"
+       android:textSize="30dp"/>
+
+
+   <CheckBox
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="Mobile App"
+       android:textSize="25dp"
+       android:textColor="@color/black"
+       android:id="@+id/chMobileApp"
+       tools:ignore="VisualLintButtonSize" />
+
+
+   <CheckBox
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="Wed App"
+       android:textSize="25dp"
+       android:textColor="@color/black"
+       android:id="@+id/chWebApp"
+       tools:ignore="VisualLintButtonSize" />
+
+
+   <CheckBox
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="AI"
+       android:textSize="25dp"
+       android:textColor="@color/black"
+       android:id="@+id/chAI"
+       tools:ignore="VisualLintButtonSize" />
+
+
+
+
+   <TextView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+
+
+       />
+   <RadioGroup
+       android:id="@+id/rgGender"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal">
+
+
+       <RadioButton
+           android:id="@+id/rbMale"
+           android:text="Male"
+           android:layout_height="wrap_content"
+           android:layout_width="match_parent"
+           android:layout_weight="1"
+           android:textSize="25dp"/>
+
+
+       <RadioButton
+           android:id="@+id/rbFemale"
+           android:text="Female"
+           android:layout_height="wrap_content"
+           android:layout_width="match_parent"
+           android:layout_weight="1"
+           android:textSize="25dp"
+           />
+   </RadioGroup>
+
+
+
+
+
+
+</LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2.random wallpaper
+
+
+Java code:
+package com.example.activity.wallpaper;
+
+
+import androidx.appcompat.app.AppCompatActivity;
+
+
+import android.app.WallpaperManager;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+
+import java.io.IOException;
+import java.util.Random;
+
+
+public class MainActivity extends AppCompatActivity {
+// Array of wallpaper resource IDs
+   private static final int[] wallpaperResources = {
+           R.drawable.wallpaper1,
+           R.drawable.wallpaper2,
+           R.drawable.wallpaper3,
+           // Add more wallpaper resource IDs as needed
+   };
+   @Override
+   protected void onCreate(Bundle savedInstanceState) {
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.activity_main);
+
+
+       Button btnChangeWallpaper = findViewById(R.id.btnChangeWallpaper);
+       btnChangeWallpaper.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               changeWallpaper();
+           }
+       });
+   }
+   public void changeWallpaper() {
+       // Get a random wallpaper resource ID
+       int randomIndex = new Random().nextInt(wallpaperResources.length);
+       int randomWallpaperId = wallpaperResources[randomIndex];
+
+
+       try {
+           // Set the wallpaper
+           getWindow().getDecorView().setBackgroundResource(randomWallpaperId);
+           Toast.makeText(this, "Wallpaper changed", Toast.LENGTH_SHORT).show();
+       } catch (Exception e) {
+           Toast.makeText(this, "Failed to set wallpaper", Toast.LENGTH_SHORT).show();
+           e.printStackTrace();
+       }
+   }
+}
+
+
+
+
+
+
+
+
+XML code:
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
+   xmlns:tools="http://schemas.android.com/tools"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   android:layout_gravity="center"
+   android:gravity="center"
+   android:orientation="vertical"
+   tools:context=".MainActivity">
+
+
+
+
+   <ImageView
+       android:id="@+id/imagePreview"
+       android:layout_width="100dp"
+       android:layout_height="100dp"
+       android:src="@drawable/wallpaper2"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+        />
+
+
+   <Button
+       android:id="@+id/btnChangeWallpaper"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Change Wallpaper"
+       android:onClick="changeWallpaper" />
+
+
+
+
+
+
+</LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Output screen:      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Input screen
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+View layout output screen:
+  
+
+
+
+View layout- input screen:
+  
+
+
+
+Main xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:tools="http://schemas.android.com/tools"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   android:padding="16dp"
+   tools:context=".MainActivity"
+   android:background="#CBE5E8">
+
+
+   <Button
+       android:id="@+id/btnHorizontal"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="Horizontal Layout"
+       android:layout_centerHorizontal="true"
+       android:layout_marginTop="110dp"/>
+
+
+   <Button
+       android:id="@+id/btnVertical"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="Vertical Layout"
+       android:layout_below="@id/btnHorizontal"
+       android:layout_centerHorizontal="true"
+       android:layout_marginTop="16dp"/>
+
+
+   <Button
+       android:id="@+id/btnTable"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="Table Layout"
+       android:layout_below="@id/btnVertical"
+       android:layout_centerHorizontal="true"
+       android:layout_marginTop="16dp"/>
+
+
+   <Button
+       android:id="@+id/btnGrid"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="Grid Layout"
+       android:layout_below="@id/btnTable"
+       android:layout_centerHorizontal="true"
+       android:layout_marginTop="16dp"/>
+
+
+   <Button
+       android:id="@+id/btnScroll"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="Scroll Layout"
+       android:layout_below="@id/btnGrid"
+       android:layout_centerHorizontal="true"
+       android:layout_marginTop="16dp"/>
+</RelativeLayout>
+
+
+
+
+Main java
+package com.example.viewlayout;
+
+
+import androidx.appcompat.app.AppCompatActivity;
+
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+
+public class MainActivity extends AppCompatActivity {
+
+
+   @Override
+   protected void onCreate(Bundle savedInstanceState) {
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.activity_main);
+
+
+       Button btnHorizontal = findViewById(R.id.btnHorizontal);
+       Button btnVertical = findViewById(R.id.btnVertical);
+       Button btnTable = findViewById(R.id.btnTable);
+       Button btnGrid = findViewById(R.id.btnGrid);
+       Button btnScroll = findViewById(R.id.btnScroll);
+
+
+       btnHorizontal.setOnClickListener(new View.OnClickListener(){
+           @Override
+           public void onClick(View v) {
+               Intent intent=new Intent(MainActivity.this,horizontal.class);
+               startActivity(intent);
+           }
+       });
+
+
+      btnVertical.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Intent intent=new Intent(MainActivity.this,vertical.class);
+              startActivity(intent);
+          }
+      });
+
+
+      btnTable.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Intent intent=new Intent(MainActivity.this,tables.class);
+              startActivity(intent);
+          }
+      });
+
+
+      btnGrid.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Intent intent=new Intent(MainActivity.this,grid.class);
+              startActivity(intent);
+          }
+      });
+
+
+      btnScroll.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Intent intent=new Intent(MainActivity.this,scroll.class);
+              startActivity(intent);
+          }
+      });
+  }
+
+
+}
+
+
+Horizontal xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:tools="http://schemas.android.com/tools"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   android:orientation="horizontal"
+   android:padding="16dp"
+   tools:context=".horizontal"
+   android:background="#FFF3F8"
+   tools:ignore="ExtraText">
+
+
+
+
+   <ImageView
+       android:id="@+id/imageView1"
+       android:layout_width="128dp"
+       android:layout_height="256dp"
+       android:src="@drawable/i1"/>
+
+
+   <ImageView
+       android:id="@+id/imageView2"
+       android:layout_width="128dp"
+       android:layout_height="256dp"
+       android:src="@drawable/i2"/>
+
+
+   <ImageView
+       android:id="@+id/imageView3"
+       android:layout_width="128dp"
+       android:layout_height="256dp"
+       android:src="@drawable/i3" />
+
+
+
+
+</LinearLayout>
+
+
+
+
+ Horizontal java
+package com.example.activity.viewlayout;
+
+
+import androidx.appcompat.app.AppCompatActivity;
+
+
+import android.os.Bundle;
+import android.widget.ImageView;
+
+
+public class horizontal extends AppCompatActivity {
+
+
+   @Override
+   protected void onCreate(Bundle savedInstanceState) {
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.activity_horizontal);
+       ImageView imageView1 = findViewById(R.id.imageView1);
+       ImageView imageView2 = findViewById(R.id.imageView2);
+       ImageView imageView3 = findViewById(R.id.imageView3);
+
+
+       imageView1.setImageResource(R.drawable.i1);
+       imageView2.setImageResource(R.drawable.i2);
+       imageView3.setImageResource(R.drawable.i3);
+   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Horizontal input screen:
+  
+
+Horizontal output screen:
+  
+
+
+
+
+
+
+
+
+
+Vertical xml:
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+   xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:tools="http://schemas.android.com/tools"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   android:orientation="vertical"
+   android:padding="16dp"
+   android:background="#4B2D1E"
+   tools:context=".MainActivity">
+
+
+   <ImageView
+       android:id="@+id/imageView1"
+       android:layout_width="match_parent"
+       android:layout_height="224dp"
+       android:scaleType="centerCrop"
+       android:src="@drawable/ig1" />
+
+
+   <ImageView
+       android:id="@+id/imageView2"
+       android:layout_width="match_parent"
+       android:layout_height="224dp"
+       android:layout_marginTop="8dp"
+       android:scaleType="centerCrop"
+       android:src="@drawable/ig2" />
+
+
+   <ImageView
+       android:id="@+id/imageView3"
+       android:layout_width="match_parent"
+       android:layout_height="224dp"
+       android:src="@drawable/ig3"
+       android:scaleType="centerCrop"
+       android:layout_marginTop="8dp"/>
+
+
+</LinearLayout>
+Vertical java:
+package com.example.viewlayout;
+
+
+import androidx.appcompat.app.AppCompatActivity;
+
+
+import android.os.Bundle;
+import android.widget.ImageView;
+
+
+public class vertical extends AppCompatActivity {
+
+
+   @Override
+   protected void onCreate(Bundle savedInstanceState) {
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.activity_vertical);
+       ImageView imageView1 = findViewById(R.id.imageView1);
+       ImageView imageView2 = findViewById(R.id.imageView2);
+       ImageView imageView3 = findViewById(R.id.imageView3);
+
+
+       // Load images into ImageViews
+       imageView1.setImageResource(R.drawable.ig1);
+       imageView2.setImageResource(R.drawable.ig2);
+       imageView3.setImageResource(R.drawable.ig3);
+   }
+}
+
+
+Vertical input screen:
+  
+
+
+
+Vertical output screen:  
+
+
+Table xml:
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
+   android:padding="15dp"
+   app:layout_constraintHeight="match_parent"
+   app:layout_constraintWidth="match_parent"
+  android:background="#D7DCA8" >
+
+
+   <TableRow
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:gravity="center">
+
+
+       <ImageView
+           android:id="@+id/imageView1"
+           android:layout_width="200dp"
+           android:layout_height="200dp"
+           android:layout_column="1"
+           android:scaleType="fitCenter"
+           android:src="@drawable/t1"
+
+
+           />
+
+
+       <ImageView
+           android:id="@+id/imageView2"
+           android:layout_width="200dp"
+           android:layout_height="200dp"
+           android:src="@drawable/t2"
+           android:scaleType="fitCenter"
+           android:layout_column="2"
+           />
+   </TableRow>
+
+
+   <TableRow
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:gravity="center">
+
+
+       <ImageView
+           android:id="@+id/imageView3"
+           android:layout_width="200dp"
+           android:layout_height="200dp"
+           android:src="@drawable/t3"
+           android:scaleType="fitCenter"
+           android:layout_column="1"/>
+
+
+       <ImageView
+           android:id="@+id/imageView4"
+           android:layout_width="200dp"
+           android:layout_height="200dp"
+           android:src="@drawable/t4"
+           android:scaleType="fitCenter"
+           android:layout_column="2"/>
+   </TableRow>
+   <TableRow
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:gravity="center">
+
+
+       <ImageView
+           android:id="@+id/imageView5"
+           android:layout_width="200dp"
+           android:layout_height="200dp"
+           android:src="@drawable/t5"
+           android:scaleType="fitCenter"
+           android:layout_column="1"/>
+
+
+       <ImageView
+           android:id="@+id/imageView6"
+           android:layout_width="200dp"
+           android:layout_height="200dp"
+           android:src="@drawable/t6"
+           android:scaleType="fitCenter"
+           android:layout_column="2"/>
+   </TableRow>
+
+
+</TableLayout>
+
+
+Table java:
+package com.example.viewlayout;
+
+
+import androidx.appcompat.app.AppCompatActivity;
+
+
+import android.os.Bundle;
+import android.widget.ImageView;
+
+
+public class tables extends AppCompatActivity {
+
+
+   @Override
+   protected void onCreate(Bundle savedInstanceState) {
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.activity_tables);
+
+
+       ImageView imageView1 = findViewById(R.id.imageView1);
+       ImageView imageView2 = findViewById(R.id.imageView2);
+       ImageView imageView3 = findViewById(R.id.imageView3);
+       ImageView imageView4 = findViewById(R.id.imageView4);
+       ImageView imageView5 = findViewById(R.id.imageView5);
+       ImageView imageView6 = findViewById(R.id.imageView6);
+
+
+       // Load images into ImageViews
+       imageView1.setImageResource(R.drawable.t1);
+       imageView2.setImageResource(R.drawable.t2);
+       imageView3.setImageResource(R.drawable.t3);
+       imageView4.setImageResource(R.drawable.t4);
+       imageView5.setImageResource(R.drawable.t5);
+       imageView6.setImageResource(R.drawable.t6);
+
+
+   }
+}
+
+
+Table input screen:  
+
+
+Table output screen:
+  
+
+
+
+
+
+
+
+Grid xml:
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout
+   xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="410dp"
+   android:layout_height="700dp"
+   android:columnCount="2"
+   android:rowCount="2"
+   android:padding="10dp">
+
+
+   <ImageView
+       android:id="@+id/imageView1"
+       android:layout_width="199dp"
+       android:layout_height="276dp"
+       android:layout_row="0"
+       android:layout_column="0"
+       android:padding="4dp"
+       android:scaleType="fitCenter"
+       android:src="@drawable/g1" />
+
+
+   <ImageView
+       android:id="@+id/imageView2"
+       android:layout_width="199dp"
+       android:layout_height="276dp"
+       android:layout_row="0"
+       android:padding="4dp"
+       android:layout_column="1"
+       android:scaleType="fitCenter"
+       android:src="@drawable/g2" />
+
+
+   <ImageView
+       android:id="@+id/imageView3"
+       android:layout_width="199dp"
+       android:layout_height="276dp"
+       android:layout_row="1"
+       android:padding="4dp"
+       android:layout_column="0"
+       android:scaleType="fitCenter"
+       android:src="@drawable/g3" />
+
+
+   <ImageView
+       android:id="@+id/imageView4"
+       android:layout_width="204dp"
+       android:layout_height="276dp"
+       android:layout_row="1"
+       android:padding="4dp"
+       android:layout_column="1"
+       android:scaleType="fitCenter"
+       android:src="@drawable/g4" />
+
+
+</GridLayout>
+
+
+Grid java:
+package com.example.viewlayout;
+
+
+import androidx.appcompat.app.AppCompatActivity;
+
+
+import android.os.Bundle;
+import android.widget.ImageView;
+
+
+public class grid extends AppCompatActivity {
+
+
+   @Override
+   protected void onCreate(Bundle savedInstanceState) {
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.activity_grid);
+       ImageView imageView1 = findViewById(R.id.imageView1);
+       ImageView imageView2 = findViewById(R.id.imageView2);
+       ImageView imageView3 = findViewById(R.id.imageView3);
+       ImageView imageView4 = findViewById(R.id.imageView4);
+
+
+       // Load images into ImageViews
+       imageView1.setImageResource(R.drawable.g1);
+       imageView2.setImageResource(R.drawable.g2);
+       imageView3.setImageResource(R.drawable.g3);
+       imageView4.setImageResource(R.drawable.g4);
+   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Grid input screen:
+
+
+  
+
+Grid output screen:  
+
+
+Scroll XML:
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+   xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent">
+
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical">
+
+
+       <ImageView
+           android:id="@+id/imageView1"
+           android:layout_width="match_parent"
+           android:layout_height="433dp"
+           android:scaleType="fitCenter"
+           android:src="@drawable/s1" />
+
+
+       <ImageView
+           android:id="@+id/imageView2"
+           android:layout_width="match_parent"
+           android:layout_height="433dp"
+           android:scaleType="fitCenter"
+           android:src="@drawable/s2" />
+
+
+       <ImageView
+           android:id="@+id/imageView3"
+           android:layout_width="match_parent"
+           android:layout_height="433dp"
+           android:src="@drawable/s3"
+           android:scaleType="fitCenter"/>
+
+
+
+
+
+
+   </LinearLayout>
+</ScrollView>
+
+
+Scroll java:
+package com.example.viewlayout;
+
+
+import androidx.appcompat.app.AppCompatActivity;
+
+
+import android.os.Bundle;
+import android.widget.ImageView;
+
+
+public class scroll extends AppCompatActivity {
+
+
+   @Override
+   protected void onCreate(Bundle savedInstanceState) {
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.activity_scroll);
+       ImageView imageView1 = findViewById(R.id.imageView1);
+       ImageView imageView2 = findViewById(R.id.imageView2);
+       ImageView imageView3 = findViewById(R.id.imageView3);
+
+
+
+
+       // Load images into ImageViews
+       imageView1.setImageResource(R.drawable.s1);
+       imageView2.setImageResource(R.drawable.s2);
+       imageView3.setImageResource(R.drawable.s3);
+
+
+   }
+}
+
+
+Scroll input screen:
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Scroll output screen:
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Progress view and Spinner
+Progress view and Spinner XML:
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   android:backgroundTint="#00BCD4"
+   android:orientation="vertical"
+   android:padding="16dp">
+
+
+   <Spinner
+       android:id="@+id/studentSpinner"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:entries="@array/students"
+       android:minHeight="48dp" />
+
+
+   <EditText
+       android:id="@+id/marksEditText"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:hint="Enter Marks"
+       android:minHeight="48dp" />
+
+
+   <Button
+       android:id="@+id/submitBtn"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="8dp"
+       android:background="@color/black"
+       android:text="Submit" />
+
+
+   <ProgressBar
+       android:id="@+id/marksProgressBar"
+       style="?android:attr/progressBarStyleHorizontal"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="16dp"
+       android:max="100"
+       android:progress="0" />
+
+
+</LinearLayout>
+
+
+
+
+
+
+Progress view and Spinner Java:
+package com.example.markapp;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
+
+
+public class MainActivity extends AppCompatActivity {
+   private ProgressBar marksProgressBar;
+   private EditText marksEditText;
+   private Button submitBtn;
+   private Spinner studentSpinner;
+   private String[] students = {"Student A", "Student B", "Student C", "Student D"};
+
+
+   @Override
+   protected void onCreate(Bundle savedInstanceState) {
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.activity_main);
+       marksProgressBar = findViewById(R.id.marksProgressBar);
+       marksEditText = findViewById(R.id.marksEditText);
+       submitBtn = findViewById(R.id.submitBtn);
+       studentSpinner = findViewById(R.id.studentSpinner);
+
+
+       ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, students);
+       adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+       studentSpinner.setAdapter(adapter);
+
+
+       submitBtn.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               String marksStr = marksEditText.getText().toString();
+               if (!marksStr.isEmpty()) {
+                   int marks = Integer.parseInt(marksStr);
+                   marksProgressBar.setProgress(marks);
+               }
+           }
+       });
+   }
+}
+
+
+
+
+Input screen:
+  
+
+
+
+Output screen:
+  
+
+
+
+1 Intents:
+Activity1:
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
+   xmlns:tools="http://schemas.android.com/tools"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   tools:context=".MainActivity">
+
+
+   <EditText
+       android:id="@+id/eName"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:ems="10"
+       android:hint="Enter name"
+       android:inputType="textPersonName"
+       android:minHeight="48dp"
+       android:text="Username"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.492"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintVertical_bias="0.206" />
+
+
+   <EditText
+       android:id="@+id/ePass"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:ems="10"
+       android:hint="Password"
+       android:inputType="textPersonName"
+       android:minHeight="48dp"
+       android:text="Password"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.497"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintVertical_bias="0.33" />
+
+
+   <Button
+       android:id="@+id/btnL"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Login"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>
+  
+
+mainActivity1:
+package com.example.intent;
+
+
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+
+public class MainActivity extends AppCompatActivity {
+private EditText eName;
+private EditText ePass;
+
+
+private String Username="Annapoorani";
+private String Password="21BCC002";
+
+
+boolean isValid=false;
+   @Override
+   protected void onCreate(Bundle savedInstanceState) {
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.activity_main);
+  eName=findViewById(R.id.eName);
+  ePass=findViewById(R.id.ePass);
+       Button btnL = findViewById(R.id.btnL);
+
+
+  btnL.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+          String inputName=eName.getText().toString();
+          String inputPassword=ePass.getText().toString();
+
+
+          if (inputName.isEmpty()||inputPassword.isEmpty()){
+              Toast.makeText(MainActivity.this, "Please enter all the details correctly!", Toast.LENGTH_SHORT).show();
+          }else{
+              isValid=validate(inputName,inputPassword);
+              if(isValid){
+                  Toast.makeText(MainActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+
+
+                  //add to code to go to new activity
+                  Intent intent=new Intent(MainActivity.this,MainActivity2.class);
+                  startActivity(intent);
+              }
+          }
+      }
+  });
+
+
+   }
+   private boolean validate(String name,String password){
+      if(name.equals(Username) && password.equals(Password)){
+          return true;
+      }
+      return false;
+       }
+}
+
+
+activity2:
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
+   xmlns:tools="http://schemas.android.com/tools"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   tools:context=".MainActivity2">
+
+
+   <TextView
+       android:id="@+id/tWelcome"
+       android:layout_width="267dp"
+       android:layout_height="93dp"
+       android:text="@string/welcome"
+       android:textSize="34sp"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.498"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintVertical_bias="0.255" />
+
+
+   <ImageView
+       android:id="@+id/imageView2"
+       android:layout_width="529dp"
+       android:layout_height="357dp"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintVertical_bias="1.0"
+       app:srcCompat="@drawable/bg"
+       android:contentDescription="@string/welcome_page_image" />
+</android.support.constraint.ConstraintLayout>
+
+
+  
+
+Main2:
+package com.example.intent;
+
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
+
+public class MainActivity2 extends AppCompatActivity {
+
+
+   @Override
+   protected void onCreate(Bundle savedInstanceState) {
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.activity_main2);
+   }
+}
+
+
+Manifest:
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:tools="http://schemas.android.com/tools">
+
+
+   <application
+       android:allowBackup="true"
+       android:dataExtractionRules="@xml/data_extraction_rules"
+       android:fullBackupContent="@xml/backup_rules"
+       android:icon="@mipmap/ic_launcher"
+       android:label="@string/app_name"
+       android:supportsRtl="true"
+       android:theme="@style/Theme.Intent"
+       tools:targetApi="31">
+       <activity
+           android:name=".MainActivity2"
+           android:exported="true" />
+       <activity
+           android:name=".MainActivity"
+           android:exported="true">
+           <intent-filter>
+               <action android:name="android.intent.action.MAIN" />
+
+
+               <category android:name="android.intent.category.LAUNCHER" />
+           </intent-filter>
+       </activity>
+   </application>
+
+
+</manifest>
+
+
+
+
+8 NOTIFICATION
+  
+
+  
+
+package com.example.a8notification;
+
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.View;
+import com.example.a8notification.R;
+public class MainActivity extends AppCompatActivity {
+
+
+private static final String CHANNEL_ID="my_channel";
+private static final String CHANNEL_DESCRIPTION="This is a notification Channel";
+private static final CharSequence CHANNEL_NAME="My Channel";
+
+
+   @Override
+   protected void onCreate(Bundle savedInstanceState) {
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.activity_main);
+
+
+       createNotificationChannel();
+   }
+   private void createNotificationChannel(){
+       if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+           NotificationChannel channel=new NotificationChannel(
+                   CHANNEL_ID,
+                   CHANNEL_NAME,
+                   NotificationManager.IMPORTANCE_DEFAULT
+           );
+           channel.setDescription(CHANNEL_DESCRIPTION);
+           NotificationManager notificationManager=getSystemService(NotificationManager.class);
+           notificationManager.createNotificationChannel(channel);
+       }
+   }
+   public void sendNotification(View view){
+       NotificationCompat.Builder builder=new NotificationCompat.Builder(this, CHANNEL_ID)
+               .setSmallIcon(R.drawable.ic_notification)
+               .setContentTitle("My notification")
+               .setContentText("This is notification from app")
+               .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+
+       NotificationManager notificationManager=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+       notificationManager.notify(1,builder.build());
+   }
+}
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
+   xmlns:tools="http://schemas.android.com/tools"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   tools:context=".MainActivity">
+
+
+   <Button
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Send Notification"
+       android:layout_centerInParent="true"
+       android:onClick="sendNotification"
+       />
+
+
+</RelativeLayout>
+
+
+Note: Enable Notification permissions in App Settings for the notification to get displayed
+
+
+Download a PNG image and add it in Drawable named as ‘ic_notification’
